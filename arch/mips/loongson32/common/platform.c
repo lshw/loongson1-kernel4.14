@@ -37,7 +37,7 @@ static struct plat_serial8250_port ls1x_serial8250_pdata[] = {
 	LS1X_UART(0),
 	LS1X_UART(1),
 	LS1X_UART(2),
-	LS1X_UART(3),
+	//LS1X_UART(3),
 	{},
 };
 
@@ -61,16 +61,32 @@ void __init ls1x_serial_set_uartclk(struct platform_device *pdev)
 		return;
 	}
 	clk_prepare_enable(clk);
-
+	//debug_printk("ls1x_serial_set_uartclk 2\n");
 	for (p = pdev->dev.platform_data; p->flags != 0; ++p)
 		p->uartclk = clk_get_rate(clk);
+
+
+	/*
+	clk = clk_get(NULL,pdev->name);//pdev->name    apb_clk
+	if (IS_ERR(clk))
+		panic("unable to get %s clock, err=%ld",
+			pdev->name, PTR_ERR(clk));
+
+	for (p = pdev->dev.platform_data; p->flags != 0; ++p)
+	{
+		p->uartclk = clk_get_rate(clk);//82500000;
+		//p->uartclk = 82500000;
+		printk("ls1x_serial_setup clk:%d\n",p->uartclk);
+	}
+	*/
+
 }
 
 /* CPUFreq */
 static struct plat_ls1x_cpufreq ls1x_cpufreq_pdata = {
 	.clk_name	= "cpu_clk",
 	.osc_clk_name	= "osc_clk",
-	.max_freq	= 266 * 1000,
+	.max_freq	= 252 * 1000,//266 252
 	.min_freq	= 33 * 1000,
 };
 

@@ -291,32 +291,38 @@ struct platform_device ls1x_gpio1_pdev = {
 	.resource	= ls1x_gpio1_resources,
 };
 
+#ifdef CONFIG_MTD_NAND_LS1X
 /* NAND Flash */
+#include <ls1x_nand.h>
+extern struct ls1x_nand_platform_data ls1x_nand_parts;
 static struct resource ls1x_nand_resources[] = {
 	[0] = {
 		.start	= LS1X_NAND_BASE,
-		.end	= LS1X_NAND_BASE + SZ_32 - 1,
+//		.end	= LS1X_NAND_BASE + SZ_16K - 1,
+		.end	= LS1X_NAND_BASE + 0x30 - 1,
 		.flags	= IORESOURCE_MEM,
 	},
 	[1] = {
-		/* DMA channel 0 is dedicated to NAND */
-		.start	= LS1X_DMA_CHANNEL0,
-		.end	= LS1X_DMA_CHANNEL0,
-		.flags	= IORESOURCE_DMA,
+		.start	= LS1X_DMA0_IRQ,
+        .end	= LS1X_DMA0_IRQ,
+		.flags	= IORESOURCE_IRQ,
 	},
 };
 
 struct platform_device ls1x_nand_pdev = {
-	.name		= "ls1x-nand",
+	.name	= "ls1x-nand",
 	.id		= -1,
+	.dev	= {
+		.platform_data = &ls1x_nand_parts,
+	},
 	.num_resources	= ARRAY_SIZE(ls1x_nand_resources),
-	.resource	= ls1x_nand_resources,
+	.resource		= ls1x_nand_resources,
 };
+#endif
 
-void __init ls1x_nand_set_platdata(struct plat_ls1x_nand *pdata)
-{
-	ls1x_nand_pdev.dev.platform_data = pdata;
-}
+
+
+
 
 /* USB EHCI */
 static u64 ls1x_ehci_dmamask = DMA_BIT_MASK(32);

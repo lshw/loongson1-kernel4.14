@@ -520,6 +520,12 @@ config MTD_NAND_JZ4780
 	  Enables support for NAND Flash connected to the NEMC on JZ4780 SoC
 	  based boards, using the BCH controller for hardware error correction.
 
+config MTD_NAND_LS1X
+	tristate "Support for NAND flash devices on Loongson1 dstling add"
+	depends on MTD_NAND && CPU_LOONGSON1
+	help
+	  Enables support for NAND Flash on Loongson 1x based boards.
+
 config MTD_NAND_FSMC
 	tristate "Support for NAND on ST Micros FSMC"
 	depends on OF

@@ -27,6 +27,10 @@ extern struct platform_device ls1x_nand_pdev;
 extern struct platform_device ls1x_rtc_pdev;
 extern struct platform_device ls1x_wdt_pdev;
 
+#ifdef CONFIG_RTC_DRV_TOY_LOONGSON1CV2
+extern struct platform_device ls1x_toy_pdev;
+#endif
+
 void __init ls1x_clk_init(void);
 void __init ls1x_dma_set_platdata(struct plat_ls1x_dma *pdata);
 void __init ls1x_nand_set_platdata(struct plat_ls1x_nand *pdata);

@@ -356,10 +356,19 @@ void __init ls1x_rtc_set_extclk(struct platform_device *pdev)
 		__raw_writel(val | RTC_EXTCLK_EN, LS1X_RTC_CTRL);
 }
 
+/*
 struct platform_device ls1x_rtc_pdev = {
 	.name		= "ls1x-rtc",
 	.id		= -1,
 };
+*/
+
+#ifdef CONFIG_RTC_DRV_TOY_LOONGSON1CV2
+struct platform_device ls1x_toy_pdev = {
+	.name		= "ls1x-toy",
+	.id		= 0,
+};
+#endif
 
 /* Watchdog */
 static struct resource ls1x_wdt_resources[] = {

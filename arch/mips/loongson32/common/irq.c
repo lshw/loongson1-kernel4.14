@@ -93,14 +93,18 @@ static int ls1x_irq_settype(struct irq_data *d, unsigned int type)
 			| (1 << bit), LS1X_INTC_INTEDGE(n));
 		break;
 	case IRQ_TYPE_EDGE_BOTH:
+		printk(KERN_WARNING "No edge_both irq type %d,at Filename: %s, Line: %d, Func: %s", type,__FILE__,__LINE__,__FUNCTION__);
+		/* Loongson1 上升沿和下降沿都会触发？ */
 		__raw_writel(__raw_readl(LS1X_INTC_INTPOL(n))
 			& ~(1 << bit), LS1X_INTC_INTPOL(n));
 		__raw_writel(__raw_readl(LS1X_INTC_INTEDGE(n))
 			| (1 << bit), LS1X_INTC_INTEDGE(n));
 		break;
 	case IRQ_TYPE_NONE:
+		printk(KERN_WARNING "No irq type setting!\n");
 		break;
 	default:
+		printk(KERN_ERR "No such irq type %d", type);
 		return -EINVAL;
 	}
 
@@ -175,7 +179,8 @@ static void __init ls1x_irq_init(int base)
 	}
 
 
-	for (n = base; n < NR_IRQS; n++) {
+	//for (n = base; n < NR_IRQS; n++) {//dstling
+	for (n = base; n < (MIPS_CPU_IRQS + LS1X_IRQS); n++) {
 		irq_set_chip_and_handler(n, &ls1x_irq_chip,
 					 handle_level_irq);
 	}

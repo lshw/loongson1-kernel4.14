@@ -12,6 +12,10 @@
 #ifndef __ASM_MACH_LOONGSON32_LOONGSON1_H
 #define __ASM_MACH_LOONGSON32_LOONGSON1_H
 
+
+#define debug_printk printk
+
+
 #if defined(CONFIG_LOONGSON1_LS1B)
 #define DEFAULT_MEMSIZE			64	/* If no memsize provided */
 #elif defined(CONFIG_LOONGSON1_LS1C)
@@ -48,6 +52,34 @@
 #define LS1X_AC97_BASE			0x1fe74000
 #define LS1X_NAND_BASE			0x1fe78000
 #define LS1X_CLK_BASE			0x1fe78030
+
+
+/* spi */
+#define LS1X_SPI0_BASE	0x1fe80000
+#define LS1X_SPI1_BASE	0x1fec0000
+
+#define SPI0_CS0				0
+#define SPI0_CS1				1
+#define SPI0_CS2				2
+#define SPI0_CS3				3
+
+#define SPI1_CS0				0
+#define SPI1_CS1				1
+#define SPI1_CS2				2
+
+/* sdio */
+#if defined(CONFIG_LOONGSON1_LS1C)
+#define LS1X_SDIO_BASE	0x1fe6c000
+#endif
+
+/* sata */
+#define LS1X_SATA_BASE	0x1fe30000
+
+/* PS2 */
+#define LS1X_PS2_BASE	0x1fe60000
+
+/* ADC */
+#define LS1X_ADC_BASE	0x1fe74000
 
 #include <regs-clk.h>
 #include <regs-mux.h>

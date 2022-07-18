@@ -98,6 +98,17 @@
 #define LS1X_I2C2_IRQ			LS1X_IRQ(1, 19)
 #endif
 
+#define LS1X_GPIO_FIRST_IRQ		LS1X_IRQ(2, 0)
+#if defined(CONFIG_LOONGSON1_LS1A)
+#define LS1X_GPIO_IRQ_COUNT 128
+#elif	defined(CONFIG_LOONGSON1_LS1B)
+#define LS1X_GPIO_IRQ_COUNT 96
+#elif	defined(CONFIG_LOONGSON1_LS1C)
+#define LS1X_GPIO_IRQ_COUNT 128
+#endif
+#define LS1X_GPIO_LAST_IRQ  (LS1X_GPIO_FIRST_IRQ + LS1X_GPIO_IRQ_COUNT-1)
+
+
 #if defined(CONFIG_LOONGSON1_LS1B)
 #define INTN	4
 #elif defined(CONFIG_LOONGSON1_LS1C)
@@ -106,6 +117,8 @@
 
 #define LS1X_IRQS		(LS1X_IRQ(INTN, 31) + 1 - LS1X_IRQ_BASE)
 
-#define NR_IRQS			(MIPS_CPU_IRQS + LS1X_IRQS)
+/* IRQ号可能不够用，所以预分配更多IRQ号 */
+//#define NR_IRQS			(MIPS_CPU_IRQS + LS1X_IRQS)
+#define NR_IRQS			320
 
 #endif /* __ASM_MACH_LOONGSON32_IRQ_H */
